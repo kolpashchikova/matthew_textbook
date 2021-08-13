@@ -184,3 +184,31 @@ for(i in 1:length(chap_positions_v)){
     chapter_freqs_l[[chapter_title]] <- chapter_freqs_t_rel
   }
   
+chapter_freqs_l[[1]]["whale"] # the first item in the list  return only those values for the word type whale
+# will return "0.1336898" - for every 100 words
+whale_l <- lapply(chapter_freqs_l, '[', 'whale')
+# do.call(rbind, list) - converting list into a matrix binding row-wise
+whales_m <- do.call(rbind, whale_l)
+ahab_l <- lapply(chapter_freqs_l, '[', 'ahab')
+ahabs_m <- do.call(rbind, ahab_l)
+whales_v <- whales_m[,1] # out of a matrix by column
+ahabs_v <- ahabs_m[,1]
+whales_ahabs_m <- cbind(whales_v, ahabs_v) # matrix with 135 rows and 2 columns
+colnames(whales_ahabs_m) <- c("whale", "ahab") 
+barplot(whales_ahabs_m, beside = TRUE)
+
+queequeg_l <- lapply(chapter_freqs_l, '[', 'queequeg') # same thing for Queequeg
+queequeg_m <- do.call(rbind, queequeg_l)
+queequeg_v <- queequeg_m[,1] # out of a matrix by column
+whales_ahabs_queequegs_m <- cbind(whales_v, ahabs_v, queequeg_v) # matrix with 135 rows and 2 columns
+colnames(whales_ahabs_queequegs_m) <- c("whale", "ahab", "queequeg") 
+barplot(whales_ahabs_queequegs_m, beside = TRUE)
+
+whale_raw_l <- lapply(chapter_raws_l, '[', 'whale') # same thing for raw frequencies
+whale_raw_m <- do.call(rbind, whale_raw_l)
+whale_raw_v <- whale_raw_m[,1]
+ahab_raw_l <- lapply(chapter_raws_l, '[', 'ahab')
+ahab_raw_m <- do.call(rbind, ahab_raw_l)
+ahab_raw_v <- ahab_raw_m[,1]
+whales_ahabs_raw_m <- cbind(whale_raw_v, ahab_raw_v)
+barplot(whales_ahabs_raw_m, beside = T, col="grey")
